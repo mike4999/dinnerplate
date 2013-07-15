@@ -1,9 +1,9 @@
 # dinnerplate 
 ## Description
-This is a python app to monitor some web page containing static thats not supposed to change.
+This is a python app to monitor some web page containing static content thats not supposed to change.
 To use this,  run it with the name of the control page as the first parameter and the second parameter 
-should be the test page thats being evaluated. At the moment only  <li>, <title>, <div>, <link> and <span> 
-are checked by default, butits trivial to add check for more html tags.
+should be the test page thats being evaluated. At the moment only ``` <li>, <title>, <div>, <link> and <span>``` 
+are checked by default, but its trivial to add check for more html tags.
 
 ## Docs
 Sample session
