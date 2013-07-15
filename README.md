@@ -16,7 +16,7 @@ $
 No news is good news, if the page had an alien edit (addition or removal,)
 
 ```
-$ python bs.py  --test http://www.uoeld.ac.ke   --control ok.html  --notify myemail@spam.com
+$ python bs.py  --test http://www.example.com   --control ok.html  --notify myemail@spam.com
  here lies the culprit <li class="top"><a href="#Top" title="Back to Top">Top</a></li> thats been added
 $
 ```
