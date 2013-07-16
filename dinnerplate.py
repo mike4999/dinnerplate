@@ -9,13 +9,19 @@ import time
 
 try:
     import defaults
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--test', help='url to page thats monitored', default =defaults.myurl)
+    parser.add_argument('--control', help='local html file with control content',default= defaults.myokfile)
+    parser.add_argument('--notify', help='email to receive notification',default=defaults.myemail)
+    args = parser.parse_args()
+
 except Exception as e:
     print "cant import module: %s"%e
-parser = argparse.ArgumentParser()
-parser.add_argument('--test', help='url to page thats monitored', default =defaults.myurl)
-parser.add_argument('--control', help='local html file with control content',default= defaults.myokfile)
-parser.add_argument('--notify', help='email to receive notification',default=defaults.myemail)
-args = parser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--test', help='url to page thats monitored')
+    parser.add_argument('--control', help='local html file with control content')
+    parser.add_argument('--notify', help='email to receive notification')
+    args = parser.parse_args()
 
 class Soup_chef():
       def __init__(self,htmldoc,control):
