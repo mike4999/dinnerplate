@@ -96,7 +96,7 @@ class Soup_chef():
                    import smtplib
                    from email.mime.text import MIMEText
                    s = smtplib.SMTP('localhost')
-                   s.sendmail(self.waiter['From'], [args.notify],str( self.dirty_plate))
+                   s.sendmail(self.waiter['From'], args.notify,str( self.dirty_plate))
            
                except Exception as e:
                    print "we're unable to send emails coz of: %s"%e
