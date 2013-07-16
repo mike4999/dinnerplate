@@ -6,8 +6,11 @@ from hotpot  import Fetch
 import sys
 import argparse
 import time
-import defaults
 
+try:
+    import defaults
+except Exception as e:
+    print "cant import module: %s"%e
 parser = argparse.ArgumentParser()
 parser.add_argument('--test', help='url to page thats monitored', default =defaults.myurl)
 parser.add_argument('--control', help='local html file with control content',default= defaults.myokfile)
