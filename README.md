@@ -36,7 +36,7 @@ myemail = ['blah@blah.com','blah2@blah.com']
 ##NB:
 this is a blocking app, it will hold the terminal till you hit Ctrl-C, <del> later i will turn it into an
 init.d service.</del>
-The app can be configured to be an init.d service, all that should be done is:
+The app can be configured to be an init.d service on systems with ```lsb``` not ```rh-lsb```, all that should be done is:
 
 1.	edit the path to the python script in the shell script named ```dinerplated```  and
 2.	alter the path to your python executable in ```dinnerplate.py```, 
