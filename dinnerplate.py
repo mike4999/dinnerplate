@@ -3,10 +3,20 @@
 # 
 #       Copyright M.O. Atambo, University of Eldoret.
 from bs4 import BeautifulSoup
-from hotpot  import Fetch
 import sys
 import argparse
 import time
+import os
+import sys
+root , pyfilename = os.path.split(os.path.abspath(__file__))
+os.chdir(root)
+
+try:
+    from hotpot  import Fetch
+except Exception as e:
+    print "cant import module: %s exiting"%e
+    sys.exit()
+
 
 try:
     import defaults
