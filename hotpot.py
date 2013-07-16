@@ -19,3 +19,4 @@ class Fetch():
 if __name__ == "__main__":
      a = Fetch('http://www.uoeld.ac.ke/')
      a.run_get()
+     print (a.reply.text)
