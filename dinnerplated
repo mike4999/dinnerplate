@@ -58,20 +58,20 @@ stop() {
 	[ "$EUID" != "0" ] && exit 4
         # Stop daemons.
 	echo -n $"Shutting down dinnerplated: "
-           if [ -n "`pidfileofproc $exec`" ]; then
-                killproc $exec
+           if [ -n "`pidofproc $exec`" ]; then
+                killall $exec
                 RETVAL=3
             else
                 failure $"Stopping $prog"
            fi
 	RETVAL=$?
-	[ $RETVAL -eq 3 ] && rm -f $lockfile 
+	[ $RETVAL -eq 3 ] && rm -f $lockfile $pidfile 
 	echo
 	return $RETVAL
 }
 
 dinner_status(){
-        if [ -n "` pidofproc $prog`" ]; then
+        if [ -n "`pidofproc $prog`" ]; then
              echo "dinnerplate.py is running"
         else
              echo "dinnerplate.py is not running"
