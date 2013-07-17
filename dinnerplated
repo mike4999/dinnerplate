@@ -28,7 +28,7 @@
 PATH="/sbin:/bin:/usr/sbin:/usr/bin:/opt/monitor/dinnerplate/"
 
 RETVAL=0
-exec='dinnerplate.py'
+exec='/opt/monitor/dinnerplate/dinnerplate.py'
 prog="dinnerplate.py"
 lockfile='/var/lock/subsys/$prog'
 pidfile='/var/spool/dinnerplate/pid/dinerplated.pid'
@@ -58,8 +58,8 @@ stop() {
 	[ "$EUID" != "0" ] && exit 4
         # Stop daemons.
 	echo -n $"Shutting down dinnerplated: "
-           if [ -n "`pidofproc $exec`" ]; then
-                killall $exec
+           if [ -n "`pidofproc $prog`" ]; then
+                killall $prog
                 RETVAL=3
             else
                 failure $"Stopping $prog"
@@ -71,7 +71,7 @@ stop() {
 }
 
 dinner_status(){
-        if [[  `pidofproc $exec` == ?(-)+([0-9])  ]]; then
+        if [[  `pidofproc $prog` == ?(-)+([0-9])  ]]; then
              echo "dinnerplate.py is running"
         else
              echo "dinnerplate.py is not running"
