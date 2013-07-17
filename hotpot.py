@@ -4,6 +4,15 @@
 
 import sys
 import requests
+import argparse
+
+try:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--control', help='local html file with control content',default= 'http://www.uoeld.ac.ke/')
+    args = parser.parse_args()
+
+except Exception as e:
+    print "Failed: %s"%e
 
 class Fetch():
       def __init__(self,args):
@@ -17,6 +26,6 @@ class Fetch():
               sys.exit()
   
 if __name__ == "__main__":
-     a = Fetch('http://www.uoeld.ac.ke/')
+     a = Fetch(args.control)
      a.run_get()
      print (a.reply.text)

@@ -36,13 +36,19 @@ myemail = ['blah@blah.com','blah2@blah.com']
 ##NB:
 this is a blocking app, it will hold the terminal till you hit Ctrl-C, <del> later i will turn it into an
 init.d service.</del>
-The app can be configured to be an init.d service on systems with ```lsb``` not ```rh-lsb```, all that should be done is:
+The app can be configured to be an init.d service on systems with <del> ```lsb``` not </del> ```rh-lsb```, all that should be done is:
 
-1.	edit the path to the python script in the shell script named ```dinerplated```  and
+1.	edit the path to the `dinnerplate.py``` script  in the shell script named ```dinnerplated```  and
 2.	alter the path to your python executable in ```dinnerplate.py```, 
 3.	copy the dinnerplated file to (typically) ```/etc/init.d/``` you can then start the service
 	with the command ``` service dinnerplated start``` or the other usual options.
 
+##Convenience
+You can create a control file using the hotpot.py script: 
+
+```
+$ python hotpot.py --control='http://example.com' >> ok.html
+```
 
 ### More to come,
 i hope to add more functionality, docs and clean up the code
