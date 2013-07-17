@@ -65,7 +65,7 @@ stop() {
                 failure $"Stopping $prog"
            fi
 	RETVAL=$?
-	[ $RETVAL -eq 0 ] && rm -f $lockfile 
+	[ $RETVAL -eq 3 ] && rm -f $lockfile 
 	echo
 	return $RETVAL
 }
