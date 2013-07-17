@@ -24,6 +24,10 @@ $
 The application goes through the page and identifies all the elements that have beed added /removed and
 prints(+/emails) out what it finds.
 
+###NB:
+this is a blocking app, it will hold the terminal till you hit Ctrl-C <del> later i will turn it into an
+init.d service.</del> by default, but see below on turning it into a service.
+
 ## Automating
 ### Requirements:
 To run this create a python file names ```defaults.py``` and  in it place the default values that you use
@@ -33,9 +37,6 @@ myurl = 'http://example.com'
 myokfile = 'ok.html'
 myemail = ['blah@blah.com','blah2@blah.com']
 ```
-##NB:
-this is a blocking app, it will hold the terminal till you hit Ctrl-C, <del> later i will turn it into an
-init.d service.</del>
 The app can be configured to be an init.d service on systems with <del> ```lsb``` not </del> ```rh-lsb```, all that should be done is:
 
 1.	edit the path to the `dinnerplate.py``` script  in the shell script named ```dinnerplated```  and
