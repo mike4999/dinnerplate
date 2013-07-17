@@ -5,8 +5,8 @@ import atexit
 class Cook():
    def __init__(self):
        self.stdin = '/dev/null'
-       self.stdout = '/home/asesma/mike/django/source/monitor/monitor/out'
-       self.stderr = '/home/asesma/mike/django/source/monitor/monitor/err'
+       self.stdout = '/dev/null'
+       self.stderr = '/dev/null'
    def daemonize(self,pidfile):
        """
        do the UNIX double-fork magic, see Stevens' "Advanced
