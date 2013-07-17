@@ -70,6 +70,13 @@ stop() {
 	return $RETVAL
 }
 
+dinner_status(){
+        if [ -n "` pidofproc $prog`" ]; then
+             echo "dinnerplate.py is running"
+        else
+             echo "dinnerplate.py is not running"
+        fi
+}
 
 # See how we were called.
 case "$1" in
