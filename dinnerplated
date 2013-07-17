@@ -94,7 +94,7 @@ case "$1" in
 	start
 	;;
   status)
-  	status -p $pidfile -l $(basename $lockfile) dinnerplate.py
+        dinner_status
 	;;
   *)
 	echo $"Usage: $0 {start|stop|restart|status}"
