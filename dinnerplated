@@ -11,8 +11,8 @@
 
 ### BEGIN INIT INFO
 # Provides: dinnerplate dinnerplated
-# Required-Start: $local_fs $network $remote_fs
-# Required-Stop: $local_fs $network $remote_fs
+# Required-Start: $local_fs $network 
+# Required-Stop: $local_fs $network 
 # Default-Start: 2 3 4 5
 # Default-Stop: 0 1 6
 # Short-Description: start and stop dinnerplate
@@ -25,33 +25,36 @@
 # Source networking configuration.
 . /etc/sysconfig/network
 
+PATH="/sbin:/bin:/usr/sbin:/usr/bin:/opt/monitor/dinnerplate/"
+
 RETVAL=0
 exec=/opt/monitor/dinnerplate/dinnerplate.py
-prog="dinnerplated"
-lockfile=/var/lock/subsys/$prog
-pidfile=/var/spool/dinnerplate/pid/dinerplated.pid
+prog="dinnerplate.py"
+lockfile='/var/lock/subsys/$prog'
+pidfile='/var/spool/dinnerplate/pid/dinerplated.pid'
 
-
-status -p $pidfile -l $(basename $lockfile) dinnerplated >/dev/null 2>&1
+status -p $pidfile -l $(basename $lockfile) dinnerplated.py >/dev/null 2>&1
 running=$?
 
 
 
 start() {
+        echo "blah2"
 	[ "$EUID" != "0" ] && exit 4
 	# Check that networking is up.
 	[ ${NETWORKING} = "no" ] && exit 1
 	# Start daemons.
         [ -x $exec ] || exit 5
 	echo -n $"Starting dinnerplated: "
-        daemon $prog
+        $prog & 
 	RETVAL=$?
-	[ $RETVAL -eq 0 ] && touch $lockfile
+	[ $RETVAL -eq 0 ] && touch $lockfile 
         echo
 	return $RETVAL
 }
 
 stop() {
+        echo "blah stop"
 	[ "$EUID" != "0" ] && exit 4
         # Stop daemons.
 	echo -n $"Shutting down dinnerplated: "
@@ -62,7 +65,7 @@ stop() {
                 failure $"Stopping $prog"
            fi
 	RETVAL=$?
-	[ $RETVAL -eq 0 ] && rm -f $lockfile $pidfile
+	[ $RETVAL -eq 0 ] && rm -f $lockfile 
 	echo
 	return $RETVAL
 }
@@ -73,6 +76,7 @@ case "$1" in
   start)
 	[ $running -eq 0 ] && exit 0
 	start
+        echo "blah"
 	;;
   stop)
 	[ $running -eq 0 ] || exit 0
@@ -85,6 +89,7 @@ case "$1" in
   status)
   	status -p $pidfile -l $(basename $lockfile) master
 	;;
+  *)
 	echo $"Usage: $0 {start|stop|restart|status}"
 	exit 2
 esac

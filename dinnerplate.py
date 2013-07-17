@@ -13,6 +13,7 @@ os.chdir(root)
 
 try:
     from hotpot  import Fetch
+    from kitchencook import Cook
 except Exception as e:
     print "cant import module: %s exiting"%e
     sys.exit()
@@ -24,6 +25,7 @@ try:
     parser.add_argument('--test', help='url to page thats monitored', default =defaults.myurl)
     parser.add_argument('--control', help='local html file with control content',default= defaults.myokfile)
     parser.add_argument('--notify', help='email to receive notification',default=defaults.myemail)
+    parser.add_argument('--daemonize', help='to daemonize or not to daemonize',default=False)
     args = parser.parse_args()
 
 except Exception as e:
@@ -34,7 +36,7 @@ except Exception as e:
     parser.add_argument('--notify', help='email to receive notification')
     args = parser.parse_args()
 
-class Soup_chef():
+class Soup_chef(Cook):
       def __init__(self,htmldoc,control):
           self.url = htmldoc
           self.control = control
@@ -43,6 +45,8 @@ class Soup_chef():
           self.control_params = {}
     
       def pour_soup (self):
+          if args.daemonize:
+                  self.daemonize('/var/spool/dinnerplate/pid/dinerplated.pid')
           self.suspect = BeautifulSoup( self.url )
           try:
               okfile = open( self.control,"r")
