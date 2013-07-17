@@ -46,7 +46,7 @@ start() {
 	# Start daemons.
         [ -x $exec ] || exit 5
 	echo -n $"Starting dinnerplated: "
-        $prog & 
+        $prog  '--daemonize=True'
 	RETVAL=$?
 	[ $RETVAL -eq 0 ] && touch $lockfile 
         echo
@@ -87,7 +87,7 @@ case "$1" in
 	start
 	;;
   status)
-  	status -p $pidfile -l $(basename $lockfile) master
+  	status -p $pidfile -l $(basename $lockfile) dinnerplate.py
 	;;
   *)
 	echo $"Usage: $0 {start|stop|restart|status}"
