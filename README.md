@@ -9,14 +9,14 @@ are checked by default, but its trivial to add check for more html tags.
 Sample session
 
 ```
-$ python bs.py  --test http://www.example.com   --control ok.html --notify myemail@spam.com 
+$ python dinnerplate.py  --test http://www.example.com   --control ok.html --notify myemail@spam.com 
 $ 
 ```
 
 No news is good news, if the page had an alien edit (addition or removal,)
 
 ```
-$ python bs.py  --test http://www.example.com   --control ok.html  --notify myemail@spam.com
+$ python dinnerplate.py  --test http://www.example.com   --control ok.html  --notify myemail@spam.com
  here lies the culprit <li class="top"><a href="#Top" title="Back to Top">Top</a></li> thats been added
 $
 ```
@@ -39,7 +39,7 @@ myemail = ['blah@blah.com','blah2@blah.com']
 ```
 The app can be configured to be an init.d service on systems with <del> ```lsb``` not </del> ```rh-lsb```, all that should be done is:
 
-1.	edit the path to the `dinnerplate.py``` script  in the shell script named ```dinnerplated```  and
+1.	edit the path to the ```dinnerplate.py``` script  in the shell script named ```dinnerplated```  and
 2.	alter the path to your python executable in ```dinnerplate.py```, 
 3.	copy the dinnerplated file to (typically) ```/etc/init.d/``` you can then start the service
 	with the command ``` service dinnerplated start``` or the other usual options.
