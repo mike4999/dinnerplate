@@ -28,7 +28,7 @@
 PATH="/sbin:/bin:/usr/sbin:/usr/bin:/opt/monitor/dinnerplate/"
 
 RETVAL=0
-exec=/opt/monitor/dinnerplate/dinnerplate.py
+exec='dinnerplate.py'
 prog="dinnerplate.py"
 lockfile='/var/lock/subsys/$prog'
 pidfile='/var/spool/dinnerplate/pid/dinerplated.pid'
@@ -46,7 +46,7 @@ start() {
 	# Start daemons.
         [ -x $exec ] || exit 5
 	echo -n $"Starting dinnerplated: "
-        $prog  '--daemonize=True'
+        $exec  '--daemonize=True'
 	RETVAL=$?
 	[ $RETVAL -eq 0 ] && touch $lockfile 
         echo
