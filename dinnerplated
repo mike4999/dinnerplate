@@ -71,7 +71,7 @@ stop() {
 }
 
 dinner_status(){
-        if [ -n "`pidofproc $prog`" ]; then
+        if [[  `pidofproc $exec` == ?(-)+([0-9])  ]]; then
              echo "dinnerplate.py is running"
         else
              echo "dinnerplate.py is not running"
