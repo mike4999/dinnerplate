@@ -1,81 +1,92 @@
-#!/bin/sh -e
-DAEMON="/opt/monitor/dinnerplate/dinnerplate.py"
-DAEMONUSER="someone"
-DEAMON_NAME="dinerplate"
+#!/bin/bash
+#
+# dinnerplate      This is a python app to monitor some web page containing static content thats not supposed to change
+#
+# chkconfig: 2345 80 30
+# description: This is a python app to monitor some web page containing static content thats not supposed to change
+# processname: dinnerplated
+# pidfile: /var/spool/dinnerplate/pid/dinerplate.pid
+#
+# Based on startup script from Simon J Mudd <sjmudd@pobox.com>
 
-PATH="/sbin:/bin:/usr/sbin:/usr/bin"
+### BEGIN INIT INFO
+# Provides: dinnerplate dinnerplated
+# Required-Start: $local_fs $network $remote_fs
+# Required-Stop: $local_fs $network $remote_fs
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: start and stop dinnerplate
+# Description: This is a python app to monitor some web page containing static content thats not supposed to change.
+### END INIT INFO
 
-test -x $DAEMON || exit 0
+# Source function library.
+. /etc/rc.d/init.d/functions
 
-. /lib/lsb/init-functions
+# Source networking configuration.
+. /etc/sysconfig/network
 
-d_start () {
-        log_daemon_msg "Starting system $DEAMON_NAME Daemon"
-        start-stop-daemon --background --name $DEAMON_NAME --start --user $DAEMONUSER --exec $DAEMON
-        log_end_msg $?
+RETVAL=0
+exec=/opt/monitor/dinnerplate/dinnerplate.py
+prog="dinnerplated"
+lockfile=/var/lock/subsys/$prog
+pidfile=/var/spool/dinnerplate/pid/dinerplated.pid
+
+
+status -p $pidfile -l $(basename $lockfile) dinnerplated >/dev/null 2>&1
+running=$?
+
+
+
+start() {
+	[ "$EUID" != "0" ] && exit 4
+	# Check that networking is up.
+	[ ${NETWORKING} = "no" ] && exit 1
+	# Start daemons.
+        [ -x $exec ] || exit 5
+	echo -n $"Starting dinnerplated: "
+        daemon $prog
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && touch $lockfile
+        echo
+	return $RETVAL
 }
 
-d_stop () {
-        log_daemon_msg "Stopping system $DEAMON_NAME Daemon"
-        start-stop-daemon --name $DEAMON_NAME --stop --retry 5 --name $DEAMON_NAME
-          log_end_msg $?
-}
-#i know this is a bad idea, but its a nice quick fix till i figure out how to make the ```status``` option portable
-status_of_proc () {
-    local pidfile daemon name status
-
-    pidfile=
-    OPTIND=1
-    while getopts p: opt ; do
-        case "$opt" in
-            p)  pidfile="$OPTARG";;
-        esac
-    done
-    shift $(($OPTIND - 1))
-
-    if [ -n "$pidfile" ]; then
-        pidfile="-p $pidfile"
-    fi
-    daemon="$1"
-    name="$2"
-
-    status="0"
-    pidofproc $pidfile $daemon >/dev/null || status="$?"
-    if [ "$status" = 0 ]; then
-        log_success_msg "$name is running"
-        return 0
-    elif [ "$status" = 4 ]; then
-        log_failure_msg "could not access PID file for $name"
-        return $status
-    else
-        log_failure_msg "$name is not running"
-        return $status
-    fi
+stop() {
+	[ "$EUID" != "0" ] && exit 4
+        # Stop daemons.
+	echo -n $"Shutting down dinnerplated: "
+           if [ -n "`pidfileofproc $exec`" ]; then
+                killproc $exec
+                RETVAL=3
+            else
+                failure $"Stopping $prog"
+           fi
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && rm -f $lockfile $pidfile
+	echo
+	return $RETVAL
 }
 
+
+# See how we were called.
 case "$1" in
-
-        start|stop)
-                d_${1}
-                ;;
-
-        restart|reload|force-reload)
-                        d_stop
-                        d_start
-                ;;
-        force-stop)
-               d_stop
-                killall -q $DEAMON_NAME || true
-                sleep 2
-                killall -q -9 $DEAMON_NAME || true
-                ;;
-
-        status)
-                status_of_proc "$DEAMON_NAME" "$DAEMON" "system-wide $DEAMON_NAME" && exit 0 || exit $?
-                ;;
-        *)
-                echo "Usage: /etc/init.d/$DEAMON_NAME {start|stop|force-stop|restart|reload|force-reload|status}"
-                exit 1
-                ;;
+  start)
+	[ $running -eq 0 ] && exit 0
+	start
+	;;
+  stop)
+	[ $running -eq 0 ] || exit 0
+	stop
+	;;
+  restart|force-reload)
+	stop
+	start
+	;;
+  status)
+  	status -p $pidfile -l $(basename $lockfile) master
+	;;
+	echo $"Usage: $0 {start|stop|restart|status}"
+	exit 2
 esac
-exit 0
+
+exit $?
