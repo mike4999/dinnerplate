@@ -38,7 +38,7 @@ except Exception as e:
 
 class Soup_chef(Cook):
       def __init__(self,htmldoc,control):
-          Cook.__init__()
+          Cook.__init__(self)
           self.url = htmldoc
           self.control = control
           self.testing= 1
