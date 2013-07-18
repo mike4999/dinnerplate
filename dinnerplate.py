@@ -22,11 +22,10 @@ except Exception as e:
 try:
     import defaults
     parser = argparse.ArgumentParser()
-    parser.add_argument('--test', help='url to page thats monitored', default =defaults.myurl)
-    parser.add_argument('--control', help='local html file with control content',default= defaults.myokfile)
-    parser.add_argument('--notify', help='email to receive notification',default=defaults.myemail)
-    parser.add_argument('--daemonize', help='to daemonize or not to daemonize',default=False)
-    args = parser.parse_args()
+    parser.add_argument('--test', help='url to page thats monitored',default= defaults.myurl )
+    parser.add_argument('--control', help='local html file with control content',default= defaults.myokfile )
+    parser.add_argument('--notify', help='email to receive notification',default=defaults.myemail )
+    parser.add_argument('--daemonize', help='to daemonize or not to daemonize',default=False )
 
 except Exception as e:
     print "cant import module: %s"%e
@@ -120,6 +119,7 @@ class Soup_chef(Cook):
 
 
 if __name__ == "__main__" :
+    args = parser.parse_args()
     while True:
         req = Fetch (args.test) 
         req.run_get()

@@ -8,8 +8,7 @@ import argparse
 
 try:
     parser = argparse.ArgumentParser()
-    parser.add_argument('--control', help='local html file with control content',default= 'http://www.uoeld.ac.ke/')
-    args = parser.parse_args()
+    parser.add_argument('--url', help='local html file with control content',default= 'http://www.uoeld.ac.ke/')
 
 except Exception as e:
     print "Failed: %s"%e
@@ -26,6 +25,7 @@ class Fetch():
               sys.exit()
   
 if __name__ == "__main__":
-     a = Fetch(args.control)
-     a.run_get()
-     print (a.reply.text)
+    args = parser.parse_args()
+    a = Fetch(args.url)
+    a.run_get()
+    print (a.reply.text)
