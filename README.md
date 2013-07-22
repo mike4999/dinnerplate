@@ -51,6 +51,10 @@ You can create a control file using the hotpot.py script:
 $ python hotpot.py --control='http://example.com' >> ok.html
 ```
 
+## Bugs:
+Its not perfect, seems to have a bug, the user must be in the directory where the python scipts are, as well as the 
+control html document before it works properly.
+
 ### More to come,
 i hope to add more functionality, docs and clean up the code
 Cheers
